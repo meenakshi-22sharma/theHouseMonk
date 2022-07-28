@@ -1,0 +1,50 @@
+<mat-toolbar>
+  <span>My Application</span>
+  <form novalidate (ngSubmit)="searchResults()" 
+    [formGroup]="searchQueryForm">
+    <input type="text" class='search-button' style="padding: 0px !important;" placeholder="Search..."
+      formControlName="query">
+    <button type="submit" mat-icon-button style="outline: none;">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+</mat-toolbar>
+
+<mat-progress-bar *ngIf="searching" mode="query"></mat-progress-bar>
+<mat-progress-bar *ngIf="!searching" mode="determinate" value="100"></mat-progress-bar>
+
+<div class="container">
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <app-filter (filterEvent)="addFilter($event)"></app-filter>
+  </mat-menu>
+
+  <div class="row">
+    <div class="col-md-4" *ngFor="let result of searchResult">
+      <mat-card class="example-card">
+        <img mat-card-image style="padding: 10px;" [src]="result.recipe.image" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            {{result.recipe.label}}
+          </p>
+        </mat-card-content>
+        <hr>
+        <div style="display: flex;justify-content: space-between;">
+          <span></span>
+          <span>
+            <span class="text-green">{{result.recipe.calories | number:'0.0-0'}} </span> CALORIES
+          </span>
+          <span>|</span>
+          <span style="text-align: center;">
+            <span class="text-green">{{result.recipe.ingredients.length}} </span>INGREDIENTS
+          </span>
+          <span></span>
+        </div>
+        <hr>
+        <mat-button>
+          {{result.recipe.source}}
+        </mat-button>
+      </mat-card>
+    </div>
+  </div>
+</div>

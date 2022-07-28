@@ -1,0 +1,15 @@
+.example-card {
+    max-width: 400px;
+    margin: 15px 0px ;
+    border: 1px solid rgb(172, 172, 172);
+}
+  
+.text-green{
+    color: rgb(85, 139, 2);
+}
+
+::ng-deep.mat-menu-panel {
+    max-width: none !important;
+    border: 1px solid rgb(215, 215, 215);
+    width: auto;
+  }
