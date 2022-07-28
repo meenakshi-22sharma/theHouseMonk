@@ -7,6 +7,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatToolbarModule,
     MatIconModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ],
   exports: [
     MatCardModule,
@@ -28,7 +30,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatToolbarModule,
     MatIconModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

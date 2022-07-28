@@ -1,1 +1,49 @@
-<p>detail works!</p>
+<!-- <pre>{{recipeUrl | json}}</pre> -->
+
+<div class="row" style="border: 1px solid #F3F3F3; color: #666;">
+    <div class="col-md-4">
+        <br>
+        <img [src]="recipeDetail?.image" alt="" srcset="" class="img-fluid">
+        <br>
+        <br>
+
+    </div>
+    <div class="col-md-8" style="text-align:center">
+        <br>
+        <h2>{{recipeDetail?.label}}</h2>
+        See full recipe on: {{recipeDetail?.source}}
+        <br>
+        <br><br>
+        <button mat-button style="margin: auto; border: 1px solid #E2e2e2"> Save <mat-icon>bookmark_border</mat-icon>
+            <br></button>
+        <br><br>
+        <mat-icon> email</mat-icon> <br>
+        Email
+    </div>
+    <hr>
+
+    <div class="col-md-6">
+        <h3> {{recipeDetail?.ingredients.length}} Ingredients </h3>
+        <hr>
+        <p style="padding: 0px 15px;" *ngFor="let ingr of recipeDetail?.ingredients">
+            {{ingr.text}}
+        </p>
+    </div>
+    <div class="col-md-6" style="text-align:center;">
+        <div>
+            <h3>Nutrition</h3>
+            <hr>
+            {{recipeDetail?.calories | number:'0.0-0'}}
+            calories/serving |
+            {{recipeDetail?.yield}}%
+            Daily Value
+        </div>
+        <hr>
+        <div>
+            <span *ngFor="let label of recipeDetail?.healthLabels">
+                {{label}},
+            </span>
+        </div>
+    </div>
+
+</div>

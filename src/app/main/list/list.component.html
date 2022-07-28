@@ -2,8 +2,8 @@
   <div class="col-md-4">
 
   </div>
-  <div class="col-md-4" style="padding: inherit;">
-    <form novalidate (ngSubmit)="searchResults()" class="search-button d-md-block d-lg-block"
+  <div class="col-md-4" style="padding: 10px;">
+    <form novalidate (ngSubmit)="searchResults()" matTooltip="Seach" class="search-button d-md-block d-lg-block"
       [formGroup]="searchQueryForm">
       <input type="text" class='search-button' (keyup)="searcKeyResults()" style="padding: 0px !important;"
         placeholder="Search..." formControlName="query">
@@ -24,18 +24,29 @@
   <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4" style="padding: inherit;">
-      <button mat-button [matMenuTriggerFor]="menu"> <span style="color: rgb(131, 131, 131)">REFINE SEARCH BY
-        </span><b>Calories, Diet, Ingredients |</b>  {{count}} result(s)&nbsp;&nbsp;&nbsp;<mat-icon>keyboard_arrow_down</mat-icon></button>
+      <button mat-button [matMenuTriggerFor]="menu" style="font-size: smaller;"> <span
+          style="color: rgb(131, 131, 131)">REFINE SEARCH BY
+        </span><b>Calories, Diet, Ingredients |</b>
+        <mat-icon>keyboard_arrow_down
+        </mat-icon>
+      </button>
+      
       <mat-menu #menu="matMenu">
         <app-filter (filterEvent)="addFilter($event)"></app-filter>
       </mat-menu>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4" style="font-size: smaller;">
+      <span style="float: right;">
+        {{count}} result(s)
+      </span>
+    </div>
   </div>
 
-  <div class="row">
+<span style="color: #666;"> <b> Filters </b> | {{diet}}, {{health}} | Calories {{cal_min}} - {{cal_max}} | Ingredients {{ingredient}}  </span> 
+<mat-icon style="font-size: small; cursor: pointer;" (click)="clear_filter()" matTooltip="Clear filters"  mat-button>highlight_off</mat-icon>
+  <div class="row" *ngIf="!recipeDetail">
     <div class="col-md-4" *ngFor="let result of searchResult">
-      <mat-card class="example-card">
+      <mat-card class="example-card" (click)="showDetails(result._links.self.href)" style="cursor:pointer">
         <img mat-card-image style="padding: 10px;" [src]="result.recipe.image" alt="Photo of a Shiba Inu">
         <mat-card-content>
           <p>
@@ -60,5 +71,13 @@
         </mat-button>
       </mat-card>
     </div>
+    <button *ngIf="nextPageLink" color="primary" style="float: right;" mat-raised-button (click)="showMore()">Show more</button>
+  </div>
+   <br>
+  <br>
+
+  <div class="row" *ngIf="recipeDetail">
+    <button mat-stroked-button color="accent" (click)="call_api()">Back</button>
+    <app-detail [recipeUrl]="recipeDetail" > </app-detail>
   </div>
 </div>

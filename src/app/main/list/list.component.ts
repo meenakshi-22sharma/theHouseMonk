@@ -16,8 +16,8 @@ export class ListComponent implements OnInit {
   diet = [];
   health = [];
   ingredient = null;
-  cal_min = 0;
-  cal_max = 0;
+  cal_min = null;
+  cal_max = null;
   query = '';
   constructor(
     private fb: FormBuilder,
@@ -27,11 +27,6 @@ export class ListComponent implements OnInit {
   searchResults(): void {
     this.call_api();
   }
-
-
-  // ():void{
-  //   this.call_api();
-  // }
 
   ngOnInit(): void {
     this.searchQueryForm = this.fb.group({
@@ -59,18 +54,38 @@ export class ListComponent implements OnInit {
   }
 
   count = 0;
+
+  recipeDetail = ''
+  showDetails(url) {
+    this.recipeDetail = url;
+  }
+
+  clear_filter() {
+    this.diet = [];
+    this.health = [];
+    this.cal_max = null;
+    this.cal_min = null;
+    this.ingredient = null;
+    this.call_api();
+  }
+
+  nextPageLink = ''
+
   call_api() {
     this.searching = true;
     this.query = this.searchQueryForm.get('query').value;
     if (this.query.length > 2) {
       this.searchService.getSearchResults(this.query, this.fields, this.diet, this.health, this.cal_min, this.cal_max, this.ingredient).subscribe(
         (response: any) => {
+          this.recipeDetail = ''
           this.searchResult = response.hits;
           this.count = response.count;
+          if (response._links.next) {
+            this.nextPageLink = response._links?.next.href;
+          }
           this.searching = false;
         },
         (error) => {
-          console.log(error)
           this.searching = false;
         }
       )
@@ -81,4 +96,23 @@ export class ListComponent implements OnInit {
     }
   }
 
+  showMore() {
+    this.searching = true;
+    this.searchService.getMore(this.nextPageLink).subscribe(
+      (response: any) => {
+        response.hits.forEach(element => {
+          this.searchResult.push(element);
+        })
+        this.count = response.count;
+        if (response._links.next) {
+          this.nextPageLink = response._links.next.href;
+        }
+        this.searching = false;
+      },
+      (error) => {
+        this.searching = false;
+      }
+    )
+  }
 }
+

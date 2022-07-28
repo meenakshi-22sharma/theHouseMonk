@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { SearchService } from 'src/app/service/search.service';
 
 @Component({
   selector: 'app-detail',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailComponent implements OnInit {
 
-  constructor() { }
+  @Input() recipeUrl = ''; 
+  constructor(
+    private searchService: SearchService
+  ) { }
+
+  recipeDetail;
 
   ngOnInit(): void {
+    this.searchService.getRecipeDetail(this.recipeUrl).subscribe(
+      (response:any)=>{
+        this.recipeDetail = response.recipe;
+      }
+    )
   }
 
 }

@@ -101,7 +101,9 @@ export class FilterComponent implements OnInit {
 
   }
 
-  searchResults(){
+  searchResult(){
+    this.selected_diet = []
+    this.selected_health = []
     this.iter_dict(this.allergies.value);
     this.iter_dict(this.diet.value);
     var filter_data = { 
@@ -124,12 +126,12 @@ export class FilterComponent implements OnInit {
 
   populate_con(key){
     this.api_diet.forEach(element=>{
-      if(key==element){
+      if(key==element && this.selected_diet.indexOf(element) === -1){
         this.selected_diet.push(key)
       }
     })
     this.api_health.forEach(element=>{
-      if(key==element){
+      if(key==element && this.selected_health.indexOf(element) === -1){
         this.selected_health.push(key)
       }
     })
