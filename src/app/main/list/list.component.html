@@ -1,23 +1,37 @@
-<mat-toolbar>
-  <span>My Application</span>
-  <form novalidate (ngSubmit)="searchResults()" 
-    [formGroup]="searchQueryForm">
-    <input type="text" class='search-button' style="padding: 0px !important;" placeholder="Search..."
-      formControlName="query">
-    <button type="submit" mat-icon-button style="outline: none;">
-      <mat-icon>search</mat-icon>
-    </button>
-  </form>
-</mat-toolbar>
+<div class="row">
+  <div class="col-md-4">
+
+  </div>
+  <div class="col-md-4" style="padding: inherit;">
+    <form novalidate (ngSubmit)="searchResults()" class="search-button d-md-block d-lg-block"
+      [formGroup]="searchQueryForm">
+      <input type="text" class='search-button' (keyup)="searcKeyResults()" style="padding: 0px !important;"
+        placeholder="Search..." formControlName="query">
+      <button type="submit" mat-icon-button
+        style="outline: none; background-color: #558b02;color: white;border-radius: 00% 50% 50% 0%; float:right">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+  </div>
+  <div class="col-md-4">
+  </div>
+</div>
 
 <mat-progress-bar *ngIf="searching" mode="query"></mat-progress-bar>
 <mat-progress-bar *ngIf="!searching" mode="determinate" value="100"></mat-progress-bar>
 
 <div class="container">
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <app-filter (filterEvent)="addFilter($event)"></app-filter>
-  </mat-menu>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="padding: inherit;">
+      <button mat-button [matMenuTriggerFor]="menu"> <span style="color: rgb(131, 131, 131)">REFINE SEARCH BY
+        </span><b>Calories, Diet, Ingredients |</b>  {{count}} result(s)&nbsp;&nbsp;&nbsp;<mat-icon>keyboard_arrow_down</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <app-filter (filterEvent)="addFilter($event)"></app-filter>
+      </mat-menu>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
 
   <div class="row">
     <div class="col-md-4" *ngFor="let result of searchResult">

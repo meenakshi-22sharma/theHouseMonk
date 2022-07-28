@@ -12,12 +12,12 @@ export class FilterComponent implements OnInit {
   @Output() filterEvent = new EventEmitter();
 
   diet = this._formBuilder.group({
-    "vegetarian": true,
+    "vegetarian": false,
     "low-fat": false,
     "vegan": false,
     "low-sodium": false,
     "paleo": false,
-    "low-sugar": true,
+    "low-sugar": false,
     "high-fiber": false,
     "alcohol-free": false,
     "high-protein": false,

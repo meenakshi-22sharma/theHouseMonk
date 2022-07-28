@@ -9,7 +9,45 @@
 }
 
 ::ng-deep.mat-menu-panel {
-    max-width: none !important;
+    max-width: 800px !important;
     border: 1px solid rgb(215, 215, 215);
     width: auto;
   }
+
+  .add-article-button{
+    color: #3c869a;
+
+    &:hover{
+        color: #3c869a;
+    }
+}
+
+.search-button{
+    background-color: #EFEFEF;
+    border: 1px solid #EFEFEF;
+    outline: none;
+    color: #516264;
+    // width: 45%;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 100;
+    border-radius: 40px;
+    padding: 0px 0px 0px 15px;
+
+    // &:hover{
+        // background-color: #f7f7f7;
+    // }
+}
+
+.uf-search-button{
+    border: none;
+    background-color: #EFEFEF;
+    outline: none;
+    vertical-align: sub;
+    
+    &:hover{
+        // background-color: ;
+        cursor: pointer;
+        // color: whit
+    }
+}

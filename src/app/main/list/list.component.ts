@@ -15,7 +15,7 @@ export class ListComponent implements OnInit {
   fields = ["label", "image", "source", "ingredients", "calories"];
   diet = [];
   health = [];
-  ingredient = [];
+  ingredient = null;
   cal_min = 0;
   cal_max = 0;
   query = '';
@@ -28,13 +28,28 @@ export class ListComponent implements OnInit {
     this.call_api();
   }
 
+
+  // ():void{
+  //   this.call_api();
+  // }
+
   ngOnInit(): void {
     this.searchQueryForm = this.fb.group({
       query: ['', [Validators.required, Validators.minLength(1)]],
     })
   }
 
-  addFilter(event){
+  debounce(func, timeout = 500) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
+  searcKeyResults = this.debounce(() => this.call_api());
+
+  addFilter(event) {
     this.diet = event.diet;
     this.health = event.health;
     this.cal_max = event.cal_max;
@@ -43,18 +58,27 @@ export class ListComponent implements OnInit {
     this.call_api();
   }
 
-  call_api(){
+  count = 0;
+  call_api() {
     this.searching = true;
     this.query = this.searchQueryForm.get('query').value;
-    this.searchService.getSearchResults(this.query, this.fields, this.diet, this.health, this.cal_min, this.cal_max, this.ingredient).subscribe(
-      (response: any) => {
-        this.searchResult = response.hits;
-        this.searching = false;
-      },
-      (error) => {
-        console.log(error)
-        this.searching = false;
-      }
-    )
+    if (this.query.length > 2) {
+      this.searchService.getSearchResults(this.query, this.fields, this.diet, this.health, this.cal_min, this.cal_max, this.ingredient).subscribe(
+        (response: any) => {
+          this.searchResult = response.hits;
+          this.count = response.count;
+          this.searching = false;
+        },
+        (error) => {
+          console.log(error)
+          this.searching = false;
+        }
+      )
+    }
+    else {
+      this.searching = false;
+      alert("Please enter more than 2 characters");
+    }
   }
+
 }

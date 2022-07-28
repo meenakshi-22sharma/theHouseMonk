@@ -29,14 +29,17 @@ export class SearchService {
     fields.forEach(element => {
       field += `&field=${element}`;
     });
+    
     let diets = '';
     diet.forEach(element=>{
       diets += `&diet=${element}`;
     })
+    
     let healths = ''
     health.forEach(element=>{
       healths += `&health=${element}`;
     })
+
     let cals = ''
     if(cal_max && cal_min){
       cals = `&calories=${cal_min}-${cal_max}`;
@@ -44,16 +47,15 @@ export class SearchService {
       cals = `&calories=${cal_max}`;
     }
     else if(cal_min){
-      cals = `&calories=${cal_min}+`;
+      cals = `&calories=${cal_min}%2B`;
     }
 
     let ing = '';
     if(ingr){
+      console.log(ingr)
       ing = `&ingr=${ingr}`
     }
 
-
-    console.log(field)
     let url = `https://api.edamam.com/api/recipes/v2?type=public&q=${search_query}&app_id=${this.app_id}&app_key=${this.app_key}${field}${diet}${healths}${cals}${ing}`;
     return this.httpService.get(url, {headers: this.getHeader()});
   }
